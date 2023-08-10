@@ -32,53 +32,6 @@ def process_cv_ner(cv_text):
         cv_ner_outputs.append([ent.text])
     return cv_ner_outputs
 
-# @app.route('/process_cvs', methods=['POST'])
-# def process_cvs():
-#     try:
-#         uploaded_files = request.files.getlist('files')
-#         job_description = request.form.get('jobDescription')
-#         cv_ner_outputs_list = []
-
-#         for uploaded_file in uploaded_files:
-#             pdf_path = f"uploads/{uploaded_file.filename}"
-#             txt_path = f"uploads/{os.path.splitext(uploaded_file.filename)[0]}.txt"
-            
-#             uploaded_file.save(pdf_path)
-            
-#             pdf_to_text(pdf_path)
-            
-#             with open(txt_path, "r", encoding='utf-8') as f:
-#                 cv_text = f.read()
-            
-#             cv_ner_outputs = process_cv_ner(cv_text)
-#             cv_ner_outputs_list.append(cv_ner_outputs)
-
-#         app.logger.info('Files uploaded successfully')
-
-#         ranked_cvs = rank_cvs_with_transformers(job_description, cv_ner_outputs_list)
-#         ranked_cv_data = []
-
-#         for idx, (cv_idx, score) in enumerate(ranked_cvs, start=1):
-#             ranked_cv_data.append({
-#                 "rank": idx,
-#                 "cv_idx": cv_idx + 1 ,
-#                 "score": float(score),
-#                 "file_name": uploaded_files[cv_idx].filename,
-#                 "ner_output": cv_ner_outputs_list[cv_idx - 1]
-#             })
-
-#         return jsonify({'ranked_cvs': ranked_cv_data}), 200
-
-#     except Exception as e:
-#         app.logger.error(str(e))
-#         return jsonify({'error': str(e)}), 500
-
-# if __name__ == '__main__':
-#     os.makedirs("uploads", exist_ok=True)
-#     logging.basicConfig(level=logging.DEBUG)
-
-#     app.run(debug=True)
-
 @app.route('/process_cvs', methods=['POST'])
 def process_cvs():
     try:
